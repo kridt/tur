@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
+import { CurrentUserContext } from "../context/CurrentUserContext";
 import { firestore } from "../firebase";
 
 export default function LogInSites() {
   const [allCodes, setAllCodes] = useState([]);
   const navigate = useNavigate();
+  const { setCurrentUser } = useContext(CurrentUserContext);
+
   useEffect(() => {
     firestore
       .collection("allUsers")
@@ -24,6 +27,8 @@ export default function LogInSites() {
         document.querySelector(".code").value = "";
       } else {
         navigate(`/dashboard/${e.target.value}`);
+        setCurrentUser(findCode.data());
+        console.log(findCode.data());
       }
     }
   }

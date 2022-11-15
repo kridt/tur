@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import ReglerOgVilkaar from "../components/ReglerOgVilkaar";
+import { CurrentUserContext } from "../context/CurrentUserContext";
 import { firestore } from "../firebase";
 
 export default function Dashboard() {
   const codeId = useParams().id;
-  const [currentUser, setCurrentUser] = useState({});
-
+  // const [currentUser, setCurrentUser] = useState({});
+  const navigate = useNavigate();
+  const { currentUser } = useContext(CurrentUserContext);
   useEffect(() => {
+    if (currentUser.name === undefined) {
+      navigate("/");
+    }
+  }, [currentUser]);
+  console.log(currentUser);
+  /* useEffect(() => {
     firestore
       .collection("allUsers")
       .get()
@@ -15,8 +23,8 @@ export default function Dashboard() {
         const findUser = e.docs.find((id) => id.id === codeId);
         setCurrentUser(findUser.data());
       });
-  }, [codeId]);
-  console.log(codeId);
+  }, [codeId]); */
+
   const User = () => {
     return (
       <>

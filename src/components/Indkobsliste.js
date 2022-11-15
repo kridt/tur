@@ -48,6 +48,7 @@ export default function Indkobsliste() {
                   name={item.name}
                   price={item.price}
                   antal={item.antal}
+                  wholeList={listOfItems}
                   key={`${item.name + item.antal + item.price}`}
                 />
               );
