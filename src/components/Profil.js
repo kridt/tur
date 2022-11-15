@@ -1,12 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import { CurrentUserContext } from "../context/CurrentUserContext";
-import { firestore } from "../firebase";
 
 export default function Profil() {
   const { currentUser } = useContext(CurrentUserContext);
-  const [user, setUser] = useState(currentUser);
-  const codeId = useParams().id;
+  const [user] = useState(currentUser);
   /* useEffect(() => {
     firestore
       .collection("allUsers")
