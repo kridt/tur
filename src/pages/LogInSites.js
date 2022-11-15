@@ -9,27 +9,25 @@ export default function LogInSites() {
   const navigate = useNavigate();
   const { setCurrentUser } = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    firestore
-      .collection("allUsers")
-      .get()
-      .then((e) => {
-        setAllCodes(e.docs);
-      });
-  }, []);
-
   function logIn(e) {
     if (e.target.value.length === 4) {
-      const findCode = allCodes.find((id) => id.id === e.target.value);
+      firestore
+        .collection("allUsers")
+        .get()
+        .then((data) => {
+          setAllCodes(data.docs);
+          const findCode = data.docs?.find((id) => id?.id === e?.target?.value);
 
-      if (findCode === undefined) {
-        alert("Koden findes ikke");
-        document.querySelector(".code").value = "";
-      } else {
-        navigate(`/dashboard/${e.target.value}`);
-        setCurrentUser(findCode.data());
-        console.log(findCode.data());
-      }
+          console.log(findCode);
+          if (findCode === undefined) {
+            alert("Koden findes ikke");
+            document.querySelector(".code").value = "";
+          } else {
+            navigate(`/dashboard/${e.target.value}`);
+            setCurrentUser(findCode.data());
+            console.log(findCode.data());
+          }
+        });
     }
   }
 
