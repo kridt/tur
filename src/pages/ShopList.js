@@ -65,6 +65,14 @@ export default function ShopList() {
                 <p>skal have {people.data().listOfItems.length} ting</p>
               </div>
               <div>
+                <p>
+                  Betalt:{" "}
+                  {people?.data().payed ? (
+                    <span>Har betalt</span>
+                  ) : (
+                    <span>Har ikke betalt</span>
+                  )}
+                </p>
                 <p>Liste</p>
                 {people.data().listOfItems.map((item) => {
                   return (
