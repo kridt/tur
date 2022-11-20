@@ -1,10 +1,13 @@
-import React, { useContext, useEffect } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import ReglerOgVilkaar from "../components/ReglerOgVilkaar";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 
 export default function Dashboard() {
   // const [currentUser, setCurrentUser] = useState({});
+  const [admin, setAdmin] = useState(false);
+  const codeId = useParams().id;
+
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
   useEffect(() => {
@@ -12,7 +15,15 @@ export default function Dashboard() {
       navigate("/");
     }
   }, [currentUser, navigate]);
-  console.log(currentUser);
+
+  useEffect(() => {
+    if (codeId === "2202") {
+      setAdmin(true);
+    }
+  }, [codeId]);
+
+  console.log(admin);
+
   /* useEffect(() => {
     firestore
       .collection("allUsers")
@@ -27,6 +38,9 @@ export default function Dashboard() {
     return (
       <>
         <Link to={"/"}>Log ud</Link>
+        <br />
+        <br />
+        {admin ? <Link to={`adminPage/${codeId}`}>admin site</Link> : <></>}
 
         <h2>Dashboard</h2>
         <h3>{currentUser?.name}</h3>
